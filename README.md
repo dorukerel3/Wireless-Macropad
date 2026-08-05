@@ -7,6 +7,7 @@ A dual-node wireless macro keyboard system built on the ESP32-S3 microcontroller
 ## Table of Contents
 
 - [System Overview](#system-overview)
+- [Hardware Gallery](#hardware-gallery)
 - [Key Features](#key-features)
 - [Transmitter Node: Architecture and Memory Decisions](#transmitter-node-architecture-and-memory-decisions)
 - [Receiver Node and HID Execution Logic](#receiver-node-and-hid-execution-logic)
@@ -30,6 +31,20 @@ The system is split into two cooperating firmware images that share a common wir
 | Receiver | Native USB HID gateway | Listens for ESP-NOW packets, translates them into USB keyboard, mouse, and consumer-control events, and reports its network identity back to the transmitter. |
 
 Both nodes are written as monolithic C++ sketches with no external file dependencies at runtime; all frontend assets are embedded directly in flash.
+
+---
+
+## Hardware Gallery
+
+Here are the physical production results of the custom-designed printed circuit boards:
+
+### Receiver Node
+![Receiver Board - Front View](images/receiver_front.jpg)
+![Receiver Board - Back View](images/receiver_back.jpg)
+
+### Transmitter Node
+![Transmitter Board - Front View](images/transmitter_front.jpg)
+![Transmitter Board - Back View](images/transmitter_back.jpg)
 
 ---
 
@@ -95,7 +110,7 @@ Macros are defined as comma-separated command sequences. The parser supports lit
 
 The repository is organized to separate the individual development domains of the dual-node ecosystem.
 
-```
+```text
 .
 ├── firmware/
 │   ├── transmitter/      Monolithic macro pad firmware, embedded web UI, ESP-NOW logic
