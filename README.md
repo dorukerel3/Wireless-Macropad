@@ -39,12 +39,10 @@ Both nodes are written as monolithic C++ sketches with no external file dependen
 Here are the physical production results of the custom-designed printed circuit boards:
 
 ### Receiver Node
-![Receiver Board - Front View](images/receiver_front.jpg)
-![Receiver Board - Back View](images/receiver_back.jpg)
+<img src="images/receiver_front.jpg" width="400" alt="Receiver Front"> <img src="images/receiver_back.jpg" width="400" alt="Receiver Back">
 
 ### Transmitter Node
-![Transmitter Board - Front View](images/transmitter_front.jpg)
-![Transmitter Board - Back View](images/transmitter_back.jpg)
+<img src="images/transmitter_front.jpg" width="400" alt="Transmitter Front"> <img src="images/transmitter_back.jpg" width="400" alt="Transmitter Back">
 
 ---
 
