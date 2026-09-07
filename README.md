@@ -1,6 +1,6 @@
 # Advanced Wireless MacroPad System (ESP32-S3)
 
-A dual-node wireless macro keyboard system built on the ESP32-S3 microcontroller ecosystem. The project was developed to resolve the latency, memory degradation, and connectivity limitations frequently encountered in open-source human interface devices. The system pairs a primary **transmitter node**, which serves as the physical macro pad and configuration host, with a dedicated **receiver node** that acts as a native USB HID gateway. The two devices communicate over the low-latency ESP-NOW protocol, and the entire ecosystem is designed to be configured without writing a single line of code or editing any files by hand.
+A dual-node wireless macro keyboard system built on the ESP32-S3 microcontroller ecosystem. The project was developed to resolve the latency, memory degradation, and connectivity limitations frequently encountered in open source human interface devices. The system pairs a primary **transmitter node**, which serves as the physical macro pad and configuration host, with a dedicated **receiver node** that acts as a native USB HID gateway. The two devices communicate over the low-latency ESP-NOW protocol, and the entire ecosystem is designed to be configured without writing a single line of code or editing any files by hand.
 
 ---
 
@@ -36,7 +36,7 @@ Both nodes are written as monolithic C++ sketches with no external file dependen
 
 ## Hardware Gallery
 
-Here are the physical production results of the custom-designed printed circuit boards:
+Here are the physical production results of the custom designed printed circuit boards:
 
 ### Receiver Node
 <img src="images/receiver_front.jpg" width="400" alt="Receiver Front"> <img src="images/receiver_back.jpg" width="400" alt="Receiver Back">
@@ -51,11 +51,11 @@ Here are the physical production results of the custom-designed printed circuit 
 - **Native USB HID output** for keyboard, mouse, and consumer-control (media) events, executed by the receiver with near-zero perceived latency.
 - **Heap-fragmentation-free architecture** using static multidimensional character arrays and reentrant parsing (`strtok_r`) instead of dynamic string allocation.
 - **Fully asynchronous web portal** built on `ESPAsyncWebServer` and `AsyncTCP`, served entirely from `PROGMEM`, so configuration never blocks the high-priority input loop.
-- **Up to 10 independent hardware layers** (160 total macro slots) persisted in non-volatile storage, with instantaneous in-page layer switching that requires no HTTP reload.
+- **Up to 10 independent hardware layers** (160 total macro slots) persisted in non-volatile storage, with instantaneous in page layer switching that requires no HTTP reload.
 - **Autonomous Wi-Fi state machine** that prioritizes the home network, disables its own access point once connected, and instantly restores the access point and captive portal on signal loss.
 - **Zero-configuration pairing**: Wi-Fi credentials sync automatically from the transmitter to the receiver, and the receiver reports its acquired IP address back to the transmitter.
 - **Dual Over-the-Air (OTA) updates** that allow a user to flash either node from a single browser interface, including a cross-origin path to update the receiver remotely.
-- **Strict power management** with automatic CPU frequency scaling during idle periods and an optional wired-mode override.
+- **Strict power management** with automatic CPU frequency scaling during idle periods and an optional wired mode override.
 - **Regional keyboard layout translation** for US, TR, FR, DE, and JP layouts.
 
 ---
@@ -106,22 +106,30 @@ Macros are defined as comma-separated command sequences. The parser supports lit
 
 ## Repository and Layout Structure
 
-The repository is organized to separate the individual development domains of the dual-node ecosystem.
+The repository keeps each node in its own folder, with firmware, fabrication, and enclosure files for that node kept together.
 
 ```text
 .
-├── firmware/
-│   ├── transmitter/      Monolithic macro pad firmware, embedded web UI, ESP-NOW logic
-│   └── receiver/         USB HID gateway and packet-translation routines
-├── hardware/
-│   ├── schematics/       Circuit schematics
-│   ├── pcb/              PCB Gerber layouts
-│   └── enclosure/        3D-printable enclosure models
+├── Macro_Keyboard_Transmitter_Files/
+│   ├── Macro_Keyboard_Transmitter_Code.ino        Transmitter firmware: 16 switches, embedded web portal, ESP-NOW
+│   ├── macro_keyboard_transmitter.csv             Bill of materials
+│   ├── macro_keyboard_transmitter-all-pos.csv     Pick and place component positions
+│   ├── Macro_Keyboard_Transmitter_Gerber&Drill.zip   Fabrication files (Gerber + drill)
+│   ├── Macro_Keyboard_Transmitter_Design.STEP     3D model of the assembled PCB
+│   └── Macro_Keyboard_Transmitter_Case.step       3D model of the enclosure
+├── Macro_Keyboard_Reciver_Files/
+│   ├── Macro_Keyboard_Receiver_Code.ino           Receiver firmware: ESP-NOW listener, native USB HID gateway
+│   ├── macro_keyboard_reciever.csv                Bill of materials
+│   ├── macro_keyboard_reciever-all-pos.csv        Pick and place component positions
+│   ├── Macro_Keyboard_Reciever_Gerber&Drill.zip   Fabrication files (Gerber + drill)
+│   ├── Macro_Keyboard_Reciever_Design.STEP        3D model of the assembled PCB
+│   └── Macro_Keyboard_Receiver_Case.step          3D model of the enclosure
+├── images/                                        Board photographs used in this README
 ├── LICENSE
 └── README.md
 ```
 
-The `firmware/transmitter/` directory contains the C++ source for the macro pad, including the embedded web interface and the wireless transmission logic. The `firmware/receiver/` directory houses the gateway logic and the native USB HID translation routines. All physical design files, including circuit schematics, PCB Gerber layouts, and 3D-printable enclosure models, are located within the `hardware/` directory.
+The `Macro_Keyboard_Transmitter_Files/` directory contains the C++ source for the macro pad, including the embedded web interface and the wireless transmission logic, alongside its fabrication package and 3D models. The `Macro_Keyboard_Reciver_Files/` directory houses the gateway firmware and the native USB HID translation routines, with its own fabrication and enclosure files. Each node's Gerber/drill archive, bill of materials, pick and place file, board STEP model, and printable case model live together in its folder.
 
 ---
 
